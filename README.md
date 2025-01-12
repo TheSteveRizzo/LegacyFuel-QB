@@ -14,7 +14,7 @@ This script utilizes `QB-Core` and `QB-Banking` to deduct funds from a user's ca
 
 ### From the author:
 
-## Exports
+#### Exports
 There are currently two (client-sided) exports available, which should help you control the fuel level for vehicles whenever needed.
 
 ```
