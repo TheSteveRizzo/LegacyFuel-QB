@@ -20,13 +20,26 @@ if Config.UseQB then
         end
 
         if price > 0 then
-            -- Attempt to remove cash from the player
-            local success = player.Functions.RemoveMoney('cash', amount, 'GAS FILL UP')
+            local retries = 3 -- Set the retry limit
+            local success = false
 
-            if success then
-                print(("[FUEL] Charged player %s $%s for gas"):format(src, amount))
-            else
-                print(("[FUEL] Failed to charge player %s for gas"):format(src))
+            -- Attempt to remove money with retries
+            while retries > 0 and not success do
+                success = player.Functions.RemoveMoney('cash', amount, 'GAS FILL UP')
+
+                if success then
+                    print(("[FUEL] Charged player %s $%s for gas"):format(src, amount))
+                else
+                    retries = retries - 1
+                    print(("[FUEL] Retry %s - Failed to charge player %s for gas"):format(3 - retries, src))
+                    Citizen.Wait(1000) -- Optional: Add a delay before retrying
+                end
+            end
+
+            if not success then
+                print(("[FUEL] Payment failed after 3 attempts for player %s"):format(src))
+                -- You can add further actions here, such as notifying the player
+                TriggerClientEvent('fuel:paymentFailed', src, amount)
             end
         else
             print("[FUEL] Price is invalid or zero!")
