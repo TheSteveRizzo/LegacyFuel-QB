@@ -107,9 +107,11 @@ AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 
         currentCost = currentCost + extraCost
 
+        -- Check player cash and stop fueling if insufficient
         if Config.UseQB then
             currentCash = PlayerData.money['cash']
         end
+
         if currentCash >= currentCost then
             SetFuel(vehicle, currentFuel)
         else
@@ -131,6 +133,7 @@ AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 
     currentCost = 0.0
 end)
+
 
 AddEventHandler('fuel:stopRefuelFromPump', function()
 	if isFueling then
