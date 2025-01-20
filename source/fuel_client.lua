@@ -107,11 +107,6 @@ AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 
         currentCost = currentCost + extraCost
 
-        -- Check player cash and stop fueling if insufficient
-        if Config.UseQB then
-            currentCash = PlayerData.money['cash']
-        end
-
         if currentCash >= currentCost then
             SetFuel(vehicle, currentFuel)
         else
@@ -133,7 +128,6 @@ AddEventHandler('fuel:startFuelUpTick', function(pumpObject, ped, vehicle)
 
     currentCost = 0.0
 end)
-
 
 AddEventHandler('fuel:stopRefuelFromPump', function()
 	if isFueling then
@@ -190,9 +184,6 @@ AddEventHandler('fuel:refuelFromJerryCan', function(ped, vehicle)
 end)
 
 AddEventHandler('fuel:requestJerryCanPurchase', function()
-	if Config.UseQB then
-		currentCash = PlayerData.money['cash']
-	end
 	if currentCash >= Config.JerryCanCost then
 		local ped = PlayerPedId()
 		if not HasPedGotWeapon(ped, 883325847) then
